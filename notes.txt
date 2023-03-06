@@ -1,0 +1,25 @@
+There are several ways to optimize the performance of a Mongoose Express API. Here are some tips:
+
+1- Use Indexes: Use indexes on fields that are frequently used for querying or sorting data. This can significantly improve the speed of database queries.
+
+2- Use lean() method: Use the lean() method to fetch data from MongoDB without creating a Mongoose model instance. This reduces the memory overhead and improves the performance of queries.
+
+3- Use Selective Queries: Use selective queries to retrieve only the necessary fields from the database. This reduces the amount of data that needs to be transferred over the network and improves the performance of queries.
+
+4- Use Pagination: Use pagination to limit the number of records returned by a query. This reduces the amount of data that needs to be transferred over the network and improves the performance of queries.
+
+5- Use Caching: Use caching to store frequently accessed data in memory. This reduces the number of database queries required and improves the performance of your application.
+
+6- Use Compression: Use compression to reduce the size of data transferred over the network. This can significantly improve the performance of your application, especially for slow connections.
+
+7- Use GZIP: Use GZIP compression to compress responses from the server, this can help in reducing the size of data to be transferred over the network.
+
+8- Avoid Callbacks: Use promises or async/await instead of callbacks to avoid callback hell and improve the readability of your code.
+
+9- Use Connection Pooling: Use connection pooling to reuse database connections and avoid the overhead of creating and destroying connections for each request.
+
+By implementing these tips, you can optimize the performance of your Mongoose Express API and improve the overall user experience.
+
+Some extra performance:
+1- Use estimatedDocumentCount() because its Faster than using countDocuments() for large collections because estimatedDocumentCount() uses collection metadata rather than scanning the entire collection.
+

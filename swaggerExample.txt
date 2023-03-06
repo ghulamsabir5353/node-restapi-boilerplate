@@ -1,0 +1,369 @@
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Address:
+ *        type: object
+ *        required:
+ *          - name
+ *          - province
+ *          - countryId
+ *          - city
+ *          - address
+ *          - userId
+ *          - postalCode
+ *          - default
+ *        properties:
+ *          id:
+ *            type: String
+ *            description: The auto-generated id of the user
+ *          name:
+ *            type: String
+ *            description: The name of the address
+ *          province:
+ *            type: String
+ *            description: The province of the person
+ *          countryId:
+ *            type: String
+ *            description: The countryId of the person
+ *          city:
+ *            type: String
+ *            description: The city of the person
+ *          address:
+ *            type: String
+ *            description: address of the user
+ *          userId:
+ *            type: String
+ *            description: userId of the user
+ *          postalCode:
+ *            type: String
+ *            description: postal Code
+ *          default:
+ *            type: Boolean
+ *            description: default shipping address
+ *        example:
+ *            name: "Office"
+ *            province: "abc"
+ *            countryId: "923928392893898"
+ *            city: "Lahore"
+ *            address: "Gulberg, Mega Tower, LHR"
+ *            userId: "928374982923"
+ *            postalCode: "54000"
+ *            default: "false"
+ */
+
+/**
+ * @swagger
+ * tags:
+ *    name: Address
+ *    description: The Address managing API
+ */
+
+ POST Request create
+ /**
+ * @swagger
+ * /address:
+ *    post:
+ *      summary: Add a new address
+ *      tags: [Address]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Address'
+ *      responses:
+ *        200:
+ *          description: Successfully created!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Address'
+ *        400:
+ *          description: Something missing
+ *        403:
+ *          description: Already Exist
+ *        500:
+ *          description: Some Server Error
+ *
+ */
+
+ Post request all address by id
+ /**
+ * @swagger
+ * /address/list/userId/{id}:
+ *    post:
+ *      summary: get all address by user id
+ *      tags: [Address]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *             type: String
+ *          description: id
+ *      responses:
+ *        200:
+ *          description: Updated Successfully!
+ *        404:
+ *          description: Not Found
+ *        505:
+ *          description: Error getting
+ */
+
+ Post Request update by id
+ /**
+ * @swagger
+ * /address/update/{id}:
+ *    post:
+ *      summary: Update address by id
+ *      tags: [Address]
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Address'
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *             type: String
+ *          description: id
+ *      responses:
+ *        200:
+ *          description: Updated Successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#components/schemas/Address'
+ *        404:
+ *          description: Not Found
+ *        505:
+ *          description: Error getting
+ */
+
+ Post Request Delete by Id
+ /**
+ * @swagger
+ * /address/delete/{id}:
+ *    post:
+ *        summary: Delete by Id
+ *        description: this api is used to delete address from db
+ *        tags: [Address]
+ *        parameters:
+ *            - in: path
+ *              name: id
+ *              schema:
+ *                type: String
+ *                description: id
+ *        responses:
+ *            200:
+ *               description: Deleted Successfully!
+ *               content:
+ *                 application/json:
+ *                   schema:
+ *                     $ref: '#components/schemas/Address'
+ *            404:
+ *               description: Not found
+ *            505:
+ *               description: Error getting
+ */
+
+ Post request update by id with selective req.body
+ /**
+ * @swagger
+ * /order/update-status/{id}:
+ *    post:
+ *      summary: Update order status by order id
+ *      tags: [Order]
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - status
+ *              properties:
+ *                status:
+ *                  type: string
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *             type: String
+ *          description: id
+ *      responses:
+ *        200:
+ *          description: Updated Successfully!
+ *        404:
+ *          description: Not Found
+ *        505:
+ *          description: Error getting
+ */
+
+ Post Request return all (short)
+/**
+ * @swagger
+ * /order/list/admin:
+ *    post:
+ *      summary: Return the list of all orders
+ *      tags: [Order]
+ *      responses:
+ *        200:
+ *          description: The list
+ */
+
+      <------- Working with files using swagger ------->
+Post Request Add product with image/file
+ /**
+ * @swagger
+ * /product:
+ *    post:
+ *      summary: Add product
+ *      tags: [Product]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          multipart/form-data:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                name:
+ *                  type: string
+ *                  required: true
+ *                description:
+ *                  type: string
+ *                  required: true
+ *                price:
+ *                  type: string
+ *                  required: true
+ *                status:
+ *                  type: string
+ *                  required: true
+ *                categoryId:
+ *                  type: string
+ *                  required: true
+ *                sellerId:
+ *                  type: string
+ *                  required: true
+ *                discount:
+ *                  type: string
+ *                  required: true
+ *                files:
+ *                  type: array
+ *                  items:
+ *                    type: string
+ *                    format: binary
+ *      responses:
+ *        200:
+ *          description: Product Added successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Product'
+ *        400:
+ *          description: Something missing
+ *        403:
+ *          description: Already Exist
+ *        500:
+ *          description: Some Server Error
+ *
+ */
+
+//add product route
+router.post("/", upload.array("files"), addProduct);
+
+ => Update Product with file and body
+ /**
+ * @swagger
+ * /product/{id}:
+ *    post:
+ *      summary: Update product by id
+ *      tags: [Product]
+ *      requestBody:
+ *        content:
+ *          multipart/form-data:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                name:
+ *                  type: string
+ *                description:
+ *                  type: string
+ *                price:
+ *                  type: string
+ *                status:
+ *                  type: string
+ *                categoryId:
+ *                  type: string
+ *                sellerId:
+ *                  type: string
+ *                discount:
+ *                  type: string
+ *                files:
+ *                  type: array
+ *                  items:
+ *                    type: string
+ *                    format: binary
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *             type: String
+ *          description: id
+ *      responses:
+ *        200:
+ *          description: Updated Successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#components/schemas/Product'
+ *        404:
+ *          description: Not Found
+ *        505:
+ *          description: Error getting
+ */
+
+//controller update product with  file and body
+ router.post("/:id", upload.array("files"), updateProductById);
+
+ => Body that contain field which contains Array of Objects
+ /**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Cart:
+ *        type: object
+ *        required:
+ *          - productDetails
+ *          - userId
+ *        properties:
+ *          id:
+ *            type: String
+ *            description: The auto-generated id of the user
+ *          productDetails:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                productId:
+ *                  type: String
+ *                  description: product Id
+ *                quantity:
+ *                  type: Number
+ *                  description: quantity of product
+ *          userId:
+ *            type: String
+ *            description: user Id
+ *        example:
+ *            productDetails: [{"productId":"983748975398475","quantity":"3"},{"productId":"983748975398475","quantity":"3"}]
+ *            userId: "982938928392839"
+ */
+
+
+      <------NOTE------>
+
+      Make sure to initialize above code in the 
+      routes so every route file contain their swagger implementation
+      <---------------->
+
+ 🙂 Happy Coding 🙂
